@@ -1,3 +1,86 @@
+1/13/2026, 1:44:48 AM
+how to add common module 
+
+1.go to packages
+create a new folder 
+npm init -y 
+npx tsc -init
+----------------------------------------------
+2.updte the tsconfig 
+{
+  "extends":"@repo/typescript-config/base.json",
+}
+update the package.json
+chage name
+{
+  "name": "@repo/backend-common",
+}
+expor the files from package.json inside the new package
+  "exports":{
+    "./config":"./src/index.ts"
+  }
+add the typescript as dependency
+"dependencies": { 
+    "@repo/typescript-config": "workspace:*"
+}
+---------------------------------------------
+3.add the folder as dependency inside the apps package.json ad the name
+ "@repo/backend-common":"workspace:*"
+---------------------------------------------
+then pnpm install globaly
+------------------------------------------------
+now you can import the exported file like 
+import { JWT_SECRET } from "@repo/backend-common/config";
+===================================================
+1/12/2026, 11:14:42 PM
+10. Write the signup, signin, create-room endpoint
+Authentication System using Express and JWT
+
+Signup Endpoint (/signup)
+- Accepts email and password from request body
+- Checks whether the user already exists
+- Hashes password using bcrypt
+- Stores user data in memory (temporary database)
+
+Signin Endpoint (/signin)
+- Accepts email and password
+- Verifies user existence
+- Compares password using bcrypt
+- Generates JWT containing userId
+
+JWT Middleware
+- Extracts token from Authorization header
+- Verifies token using secret key
+- Attaches userId to request object
+- Blocks access if token is invalid or missing
+
+Protected Route (/room)
+- Accessible only with valid JWT
+- Uses middleware for authorization
+- Returns success response with userId
+
+Technologies Used
+- Express.js for server
+- JSON Web Token (JWT) for authentication
+- bcrypt for password hashing
+- TypeScript for type safety
+
+Note
+- User data is stored in memory and can be replaced with a database later
+===================================================
+1/12/2026, 10:40:07 PM
+Todays task is 
+10. Write the signup, signin, create-room endpoint
+
+11. Write the middlewares that decode the token and gate the create-room ep
+
+12. Decode the token in the websocket server as well.
+    Send the token to the websocket server in a query param for now
+
+13. Initialize a new `db` package where you write the schema of the project.
+
+14. Import the db package in http layer and start putting things in the DB
+===================================================
 1/12/2026, 3:25:47 AM
 9. Initialize an HTTP server and initialize a WebSocket server.
 go to specific app path in terminal and then run
@@ -57,4 +140,3 @@ pnpm run dev  => this will run the apps
 ===================================================
 1/12/2026, 2:31:58 AM
 I am starting this project for my resume and this journal will contain all the command and procedur for this project
-===================================================

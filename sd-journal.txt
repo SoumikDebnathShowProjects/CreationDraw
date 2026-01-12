@@ -1,0 +1,60 @@
+1/12/2026, 3:25:47 AM
+9. Initialize an HTTP server and initialize a WebSocket server.
+go to specific app path in terminal and then run
+cd apps/ws-backend
+pnpm add express @types/express
+cd apps/http-backend
+pnpm add ws @types/ws
+
+now we can  work with express   
+similar way we can add dependencies
+===================================================
+1/12/2026, 3:19:44 AM
+7. Add build, dev, and start scripts to both projects.
+  "scripts": {
+    "build": "tsc -b",
+    "start": "node ./dist/index.js",
+    "dev": "npm run build&& npm run start"
+  }  
+add thsi code to package.json
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist"
+
+  }
+add the path directory in the tsconfig files in both
+===================================================
+1/12/2026, 3:09:12 AM
+after that  you need add the tsconfig file as depenency 
+ "dependencies": {
+    "@repo/typescript-config":"workspace:*"
+  }
+
+like this 
+
+then run  the cmd
+
+pnpm install
+
+now all the dependency are in sync
+===================================================
+1/12/2026, 2:52:39 AM
+init typescript  npx tsc --init
+***  as we are using turbo repo don't use duplicate code extend the code from /packages/typescript-config/base.json
+
+inside the tsconfig files
+like 
+
+extends:"@repo/typescript-config/base.json"
+===================================================
+1/12/2026, 2:47:57 AM
+1. created ws-backend and http-backend
+2. npm init -y (inside both folder)
+===================================================
+1/12/2026, 2:33:43 AM
+pnpm install  =>this will install all the packages for the apps (it whould run globaly)
+pnpm run dev  => this will run the apps
+===================================================
+1/12/2026, 2:31:58 AM
+I am starting this project for my resume and this journal will contain all the command and procedur for this project
+===================================================

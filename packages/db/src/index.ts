@@ -1,10 +1,10 @@
-import { PrismaClient } from '../src/generated/prisma/client' // Import from node_modules, not ./generated
-import { PrismaNeon } from '@prisma/adapter-neon'
-import dotenv from 'dotenv'
+import "dotenv/config";
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '@prisma/client'
 
-dotenv.config();
+const connectionString = `${process.env.DATABASE_URL}`
 
-const connectionString = process.env.DATABASE_URL || "";
-const adapter = new PrismaNeon({ connectionString })
+const adapter = new PrismaPg({ connectionString })
+const prisma = new PrismaClient({ adapter })
 
-export const prismaClient = new PrismaClient({ adapter });
+export { prisma }

@@ -1,3 +1,44 @@
+1/14/2026, 4:58:09 AM
+adding prisma  
+create a db file in packages
+---------------------------
+npm init -y 
+npx tsc -init
+do usual
+-----------------------------------
+pnpm add prisma --save-dev
+pnpm add @prisma/client
+-------------------------
+npx prisma init
+add .env
+
+-------------------------
+update schema 
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+use this generator by default it will generate the ifle inside node modules
+
+-----------------------------------
+npx prisma migrate --name init
+npx prisma generate
+-----------------------------------
+in src index.ts
+export the client
+import "dotenv/config";
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '@prisma/client'
+
+const connectionString = `${process.env.DATABASE_URL}`
+
+const adapter = new PrismaPg({ connectionString })
+const prisma = new PrismaClient({ adapter })
+
+export { prisma }
+-----------------------------------------------
+===================================================
 1/13/2026, 5:03:09 PM
 remember when ever you are adding new common dependency 
 ----------------------

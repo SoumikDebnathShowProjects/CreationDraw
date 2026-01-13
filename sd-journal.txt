@@ -1,3 +1,12 @@
+1/13/2026, 5:03:09 PM
+remember when ever you are adding new common dependency 
+----------------------
+run the command
+pnpm run build 
+------------------------
+it will build the essential ts files otherwise the you have to create the 
+dist file and and send the .js and .d.ts filie to the apps and it's not global
+===================================================
 1/13/2026, 4:21:49 PM
 I have added a commmon file where all the types are present 
 it exports zod validation types file

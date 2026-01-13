@@ -3,9 +3,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { middleware } from "./middleware";
 import {JWT_SECRET} from "@repo/backend-common/config"
-import {prisma}from "@repo/db/client"
+import {prismaClient} from "@repo/db/client";
 import { SignupSchema, SigninSchema } from "@repo/common/types";
-
+const prisma=prismaClient;
 const app = express();
 app.use(express.json());
 

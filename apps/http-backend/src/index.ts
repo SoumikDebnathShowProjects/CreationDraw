@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { middleware } from "./middleware";
 import {JWT_SECRET} from "@repo/backend-common/config"
+import { SignupSchema, SigninSchema } from "@repo/common/types";
 
 const app = express();
 app.use(express.json());
@@ -19,7 +20,12 @@ let userIdCounter = 1;
 /* ================= SIGNUP ================= */
 app.post("/signup", async (req, res) => {
     //take credential
-  const { email, password } = req.body;
+  const parsed = SignupSchema.safeParse(req.body);
+
+  if (!parsed.success) {
+    return res.status(400).json(parsed.error.flatten());
+  }
+  const { email, password } = parsed.data;
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password required" });
@@ -44,7 +50,12 @@ app.post("/signup", async (req, res) => {
 /* ================= SIGNIN ================= */
 app.post("/signin", async (req, res) => {
     //take credential
-  const { email, password } = req.body;
+  const parsed = SigninSchema.safeParse(req.body);
+
+  if (!parsed.success) {
+    return res.status(400).json(parsed.error.flatten());
+  }
+  const { email, password } = parsed.data;
     if (!email || !password) {
     return res.status(400).json({ message: "Email and password required" });
   }

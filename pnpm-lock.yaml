@@ -23,6 +23,9 @@ importers:
       '@repo/backend-common':
         specifier: workspace:*
         version: link:../../packages/backend-common
+      '@repo/common':
+        specifier: workspace:*
+        version: link:../../packages/common
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -87,6 +90,9 @@ importers:
       '@repo/backend-common':
         specifier: workspace:*
         version: link:../../packages/backend-common
+      '@repo/common':
+        specifier: workspace:*
+        version: link:../../packages/common
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -108,6 +114,15 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+
+  packages/common:
+    dependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      zod:
+        specifier: ^4.3.5
+        version: 4.3.5
 
   packages/eslint-config:
     devDependencies:
@@ -1761,6 +1776,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@4.3.5:
+    resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
 
 snapshots:
 
@@ -3604,3 +3622,5 @@ snapshots:
   ws@8.19.0: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@4.3.5: {}

@@ -1,12 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-
 }
 
 datasource db {
@@ -14,17 +10,96 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
+  name      String
   email     String   @unique
   password  String
-  rooms     Room[] 
+  avatar    String?
+  status    String   @default("offline") // online, offline, away
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  createdRooms Room[]       @relation("RoomCreator")
+  roomMembers  RoomMember[]
+  shapes       Shape[]
+  teamMembers  TeamMember[]
+
+  @@map("users")
 }
 
 model Room {
-  id        Int      @id @default(autoincrement())
-  name      String
-  ownerId   Int
-  owner     User     @relation(fields: [ownerId], references: [id])
+  id          String   @id @default(cuid())
+  name        String
+  description String   @default("")
+  isPublic    Boolean  @default(false)
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  createdBy User         @relation("RoomCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  members   RoomMember[]
+  shapes    Shape[]
+
+  @@map("rooms")
+}
+
+model RoomMember {
+  id       String   @id @default(cuid())
+  roomId   String
+  userId   String
+  joinedAt DateTime @default(now())
+
+  // Relations
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, userId])
+  @@map("room_members")
+}
+
+model Shape {
+  id         String   @id @default(cuid())
+  type       String // path, line, rectangle, circle, text
+  color      String
+  width      Int
+  fill       String?
+  text       String?
+  points     Json? // Array of {x, y}
+  startPoint Json? // {x, y}
+  endPoint   Json? // {x, y}
+  roomId     String
+  userId     String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("shapes")
+}
+
+model TeamMember {
+  id       String   @id @default(cuid())
+  userId   String   @unique
+  role     String   @default("member") // admin, member, viewer
+  joinedAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("team_members")
+}
+
+model TeamInvite {
+  id        String   @id @default(cuid())
+  email     String
+  role      String   @default("member")
+  invitedBy String
+  status    String   @default("pending") // pending, accepted, rejected
   createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@map("team_invites")
 }
